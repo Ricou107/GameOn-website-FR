@@ -2,7 +2,7 @@
 //prevent form to submit
 form.addEventListener('submit', event => {
     event.preventDefault();
-    console.log('Form submission cancelled.');
+    //console.log('Form submission cancelled.');
 });
 
 
@@ -25,22 +25,30 @@ function formValidation() {
 
     //Check if the firstName have at least two caracters
     function checkFirstName(firstName) {
-        if (firstName.length > 1) {
+        let regex = /^[a-z ,.'-]+$/i
+        if (firstName.length > 1 && regex.test(firstName)) {
             document.querySelector("#divFirst p").innerHTML = ""
             return true
-        } else {
+        } else if (firstName.length < 2){
             document.querySelector("#divFirst p").innerHTML = "Votre prénom doit avoir deux caractères minimum."
+            return false
+        } else {
+            document.querySelector("#divFirst p").innerHTML = "Votre prénom ne doit pas comporter de caractères spéciaux."
             return false
         }
     }
 
     //Check if the lastName have at least two caracters
     function checkLastName(lastName) {
-        if (lastName.length > 1) {
+        let regex = /^[a-z ,.'-]+$/i
+        if (lastName.length > 1 && regex.test(lastName)) {
             document.querySelector("#divLast p").innerHTML = ""
             return true
-        } else {
+        } else if (lastName.length < 2){
             document.querySelector("#divLast p").innerHTML = "Votre nom doit avoir deux caractères minimum."
+            return false
+        } else {
+            document.querySelector("#divLast p").innerHTML = "Votre nom ne doit pas comporter de caractères spéciaux."
             return false
         }
     }
@@ -63,6 +71,17 @@ function formValidation() {
             return true
         } else {
             document.querySelector("#divBirthdate p").innerHTML = "Veuillez entrer une date de naissance."
+            return false
+        }
+    }
+
+    //Check if the location is good
+    function checkLocation(location) {
+        if (location !== null) {
+            document.querySelector("#divLocation p").innerHTML = ""
+            return true
+        } else {
+            document.querySelector("#divLocation p").innerHTML = "Veuillez choisir un lieu."
             return false
         }
     }
@@ -90,9 +109,9 @@ function formValidation() {
     }
 
 
-    console.log(first, last, email, birthdate, quantity, location, checkbox1, checkbox2, checkFirstName(first) , checkLastName(last) , checkEmail(email) , checkBirthdate(birthdate) , checkQuantity(quantity) , checkTerms(checkbox1))
+    console.log(first, last, email, birthdate, quantity, location, checkbox1, checkbox2, checkFirstName(first) , checkLastName(last) , checkEmail(email) , checkBirthdate(birthdate) , checkQuantity(quantity) , checkTerms(checkbox1), checkLocation(location))
 
-    if (checkFirstName(first) && checkLastName(last) && checkEmail(email) && checkBirthdate(birthdate) && checkQuantity(quantity) && checkTerms(checkbox1)) {
+    if (checkFirstName(first) && checkLastName(last) && checkEmail(email) && checkBirthdate(birthdate) && checkQuantity(quantity) && checkTerms(checkbox1) && checkLocation(location)) {
         document.querySelector(".modal-body").innerHTML = '<br/><br/>Merci pour votre inscription ! <br/><br/><br/>  <input class="btn-submit" type="submit" class="button" value="Fermer" onClick="closeModal()"/>'
     }
 
